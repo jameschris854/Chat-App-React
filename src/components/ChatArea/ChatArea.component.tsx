@@ -1,6 +1,6 @@
 import React, { createRef, memo, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "../../redux/features/conversation/conversationSlice";
+import { sendMessage, updateMessage } from "../../redux/features/conversation/conversationSlice";
 import UserUtil from "../../utils/UserUtil";
 import "./ChatArea.styles.scss";
 
@@ -33,6 +33,16 @@ const ChatArea = () => {
     console.log(scrollRef.current)
     scrollRef.current?.scrollTo(0,scrollRef.current.scrollHeight)
   }, [selectedConvo])
+
+  useEffect(() => {
+    if(selectedConvo?.recentConversations){
+        selectedConvo.recentConversations.forEach((el:any) => {
+            if(el.status !== "SEEN" && el.sender === profile.id){
+                dispatch(updateMessage({id:el._id,status:"SEEN"}))
+            }
+        });
+    }
+  },[selectedConvo?.recentConversations])
   
   if (!selectedConvo) return <div className="no-convo">No Conversations</div>;
 
@@ -53,11 +63,18 @@ const ChatArea = () => {
       </div>
 
       <div ref={scrollRef} className="chatarea-conversations">
-        {selectedConvo.recentConversations.map((conv) => {
-          const isSender = conv.sender === profile._id;
+        {selectedConvo.recentConversations.map((message) => {
+          const isSender = message.sender === profile._id;
+          const time = new Date(message.updatedAt)
           return (
-            <div className={`chatarea-message ${isSender ? "self" : ""}`}>
-              {conv.content}
+            <div className={`chatarea-message-container ${isSender ? "self" : ""}`}>
+                <div className="message-content one">
+                    {message.content}
+                </div>
+                <div className="message-content two">
+                    <div className="time">{time?.toLocaleTimeString()}</div>
+                    <i className={`fa-solid fa-check-double ${message.status}`}></i>
+                </div>
             </div>
           );
         })}

@@ -54,11 +54,12 @@
     overflow-y: scroll;
     align-items: center;
     padding: 12px;
-    .chatarea-message {
+    .chatarea-message-container {
       display: flex;
+      flex-direction: column;
       border-radius: 12px;
       margin: 12px 0px;
-      padding: 12px;
+      padding: 6px 12px;
       color: var(--dark);
       background-color: var(--primary);
       margin-right: auto;
@@ -72,6 +73,24 @@
         margin-right: 0px;
         border-top-left-radius: 12px;
         border-top-right-radius: 0px;
+      }
+
+      .message-content.two{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        .time{
+            font-size: 6px;
+            color: var(--grey);
+        }
+        i{
+            color: var(--grey);
+            font-size: 6px;
+            .SEEN {
+                color: rgb(0, 162, 255);
+            }
+        }
       }
     }
   }

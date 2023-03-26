@@ -1,6 +1,6 @@
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { io, Socket } from "socket.io-client";
-import { recieveMessage, setConversations, setProfile } from "../features/conversation/conversationSlice";
+import { recieveMessage, setConversations, setProfile, updateMessageState } from "../features/conversation/conversationSlice";
 
 const createSocketMiddleware = (url:string) => {
     let socket: Socket<DefaultEventsMap, DefaultEventsMap> ;
@@ -36,6 +36,13 @@ const createSocketMiddleware = (url:string) => {
                     storeAPI.dispatch(recieveMessage(e))
                 }
               })
+
+              socket.on("MESSAGE_UPDATES",(e) => {
+                if(e){
+                    console.log('MESSAGE_UPDATES',e)
+                    storeAPI.dispatch(updateMessageState(e))
+                }
+              })
             
               // Connect and listen
               socket.on("CONNECTION_COMPLETE",() => {
@@ -60,6 +67,16 @@ const createSocketMiddleware = (url:string) => {
               socket.emit('SEND_PERSONAL_MESSAGE', {
                 conversationId:storeAPI.getState().conversation.activeConversation.id,
                 content:action.payload
+            });
+              break;
+            }
+
+            // Update Message
+            case 'conversation/updateMessage': {
+              console.log('act',action.type,storeAPI.getState())
+              socket.emit('UPDATE_MESSAGE_STATUS', {
+                messageId:action.payload.id,
+                status:action.payload.status
             });
               break;
             }

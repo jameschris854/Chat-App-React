@@ -27,9 +27,15 @@ export const conversationSlice = createSlice({
     sendMessage: (state,action) => {
       // state.activeConversation.id = action.payload
     },
+
+    updateMessage: (state,action:{payload:{id:string,status:"SEEN"}}) => {
+      // state.activeConversation.id = action.payload
+    },
+
     startConversation: (state,action) => {
       // state.activeConversation.id = action.payload
     },
+
     recieveMessage: (state,action) => {
       let conversationObj = state.conversations.find(conv => conv._id === action.payload.conversationId);
       if(!conversationObj) {
@@ -47,11 +53,36 @@ export const conversationSlice = createSlice({
         }
       })
 
+    },
+
+    updateMessageState: (state,action) => {
+      let conversationObj = state.conversations.find(conv => conv._id === action.payload.conversationId);
+      if(!conversationObj) {
+        return;
+      }
+
+      state.conversations = state.conversations.map((convo:any) => {
+        if(convo._id === action.payload.conversationId){
+          console.log('if')
+          return {
+            ...convo,
+            recentConversations:conversationObj.recentConversations.map((message) => {
+              if(message._id === action.payload._id){
+                return action.payload
+              }else{
+                return message
+              }
+            })
+          }
+        }else{
+          return convo;
+        }
+      })
     }
   },
 });
 
-export const { setConversations,joinConversation,sendMessage,recieveMessage,setProfile,startConversation } = conversationSlice.actions;
+export const { setConversations,joinConversation,sendMessage,recieveMessage,setProfile,startConversation,updateMessage,updateMessageState } = conversationSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
