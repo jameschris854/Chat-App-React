@@ -1,0 +1,51 @@
+:root {
+  --bg-primary: #fffbeb;
+  --primary: #fffbeb;
+  --bg-secondary: #495579;
+  --secondary: #495579;
+  --tertairy: #263159;
+  --light: #ffffff;
+  --dark: #000000;
+  --grey: #585858;
+}
+
+input {
+  border: 2px solid #eee;
+  border-radius: 4px;
+}
+input:valid,
+input:in-range {
+  border-color: green;
+}
+input:invalid,
+input:out-of-range {
+  border-color: red;
+}
+
+input {
+  outline: none;
+  background-color: var(--light);
+  color: var(--dark);
+  box-shadow: none;
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+button {
+  outline: none;
+  background-color: var(--tertairy);
+  color: var(--light);
+  box-shadow: none;
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+.button {
+    cursor: pointer;
+}
