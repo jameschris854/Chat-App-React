@@ -20,7 +20,19 @@
     "react-router-dom": "^6.8.2",
     "react-scripts": "latest",
     "socket.io-client": "^4.6.1",
-    "typescript": "latest"
+    "typescript": "latest",
+    "workbox-background-sync": "^6.4.2",
+    "workbox-broadcast-update": "^6.4.2",
+    "workbox-cacheable-response": "^6.4.2",
+    "workbox-core": "^6.4.2",
+    "workbox-expiration": "^6.4.2",
+    "workbox-google-analytics": "^6.4.2",
+    "workbox-navigation-preload": "^6.4.2",
+    "workbox-precaching": "^6.4.2",
+    "workbox-range-requests": "^6.4.2",
+    "workbox-routing": "^6.4.2",
+    "workbox-strategies": "^6.4.2",
+    "workbox-streams": "^6.4.2"
   },
   "scripts": {
     "start": "set PORT=10000 && react-scripts start",
